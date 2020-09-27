@@ -3,7 +3,7 @@ namespace Podlove\Webvtt;
 
 /**
  * NOTES
- * 
+ *
  * - this is great: https://w3c.github.io/webvtt/
  */
 class Parser {
@@ -63,15 +63,15 @@ class Parser {
 
 	/**
 	 * Reads and returns current line.
-	 * 
+	 *
 	 * Advances $pos and $line.
-	 * 
+	 *
 	 * @return string
 	 */
 	private function read_line()
 	{
 		$line = "";
-		
+
 		while (($c = $this->next()) !== self::LF && !$this->is_end_reached()) {
 		    $this->pos++;
 		    $line .= $c;
@@ -90,9 +90,9 @@ class Parser {
 
 	/**
 	 * Reads and returns current block.
-	 * 
+	 *
 	 * Advances $pos and $line.
-	 * 
+	 *
 	 * @return string
 	 */
 	private function read_block()
@@ -154,10 +154,10 @@ class Parser {
 
 	/**
 	 * Simplistic cue text parsing.
-	 * 
+	 *
 	 * Want to do it properly?
 	 * @see  https://w3c.github.io/webvtt/#webvtt-cue-text-parsing-rules
-	 * 
+	 *
 	 * @param  string $text
 	 * @return [string, string]
 	 */
@@ -179,9 +179,9 @@ class Parser {
 
 	/**
 	 * Is this the first line of a comment?
-	 * 
+	 *
 	 * A comment startes with "NOTE", followed by a space or newline.
-	 * 
+	 *
 	 * @param  string
 	 * @return boolean
 	 */
@@ -299,7 +299,7 @@ class Parser {
 			$this->pos += 3;
 		} else {
 			$this->exit_expected("-->");
-		}		
+		}
 	}
 
 	private function skip_full_stop()
@@ -307,7 +307,7 @@ class Parser {
 		if ($this->next() !== '.' || $this->is_end_reached()) {
 			$this->exit_expected("FULL STOP (.)", "Error when parsing Timestamp");
 		}
-		$this->pos++;			
+		$this->pos++;
 	}
 
 	private function skip_colon()
@@ -315,13 +315,13 @@ class Parser {
 		if ($this->next() !== ':' || $this->is_end_reached()) {
 			$this->exit_expected("COLON (:)", "Error when parsing Timestamp");
 		}
-		$this->pos++;		
+		$this->pos++;
 	}
 
 	private function skip_bom()
 	{
 		$bom = chr(239) . chr(187) . chr(191);
-		
+
 		if ($this->next(3) == $bom) {
 			$this->pos += 3;
 		}
@@ -333,7 +333,7 @@ class Parser {
 			$this->pos += 6;
 		} else {
 			$this->exit("Missing WEBVTT at beginning of file");
-		}		
+		}
 	}
 
 	private function skip_signature_trails()
@@ -373,7 +373,7 @@ class Parser {
 
 	private function exit($message = "Error")
 	{
-		throw new ParserException("$message at line {$this->line}, pos {$this->pos}");		
+		throw new ParserException("$message at line {$this->line}, pos {$this->pos}");
 	}
 
 	private function exit_expected($thing, $message = "")
